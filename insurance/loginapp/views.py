@@ -53,7 +53,7 @@ def change_password(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect(reverse('login_view'))
+    return render(request, 'loginapp/logout.html')
 
 def login_view(request):
     if request.method == 'POST':
