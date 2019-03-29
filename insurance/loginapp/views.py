@@ -16,12 +16,7 @@ from django.urls import reverse
 def test(request):
     return render(request, 'loginapp/comingsoon.html')
 
-#
-# def test_1(request):
-#     return HttpResponse("<h1>CHANGE PASSWORD</h1>")
 
-#work in progress
-#not working properly
 @login_required
 def change_password(request):
     # print("hello from password")
