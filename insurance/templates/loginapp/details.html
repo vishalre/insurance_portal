@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Next Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <form method = "post" enctype="multipart/form-data" action="{% url 'details' %}">
+        <div class="container">
+        {% csrf_token %}
+
+       license Number:<input type="text" value="000000" name="lic"><br><br>
+       Images of car:<input type="file" name="car"><br><br>
+       speed of car:<input type="text" value="00" name="speed"><br><br>
+       Model of vechile:
+       <select name="vechilemodel">
+    <option value="Swift">Swift</option>
+    <option value="Ertiga">Ertiga</option>
+    <option value="Baleno">Baleno</option>
+    <option value="Breeza">Breeza</option>
+
+     <option value="ciaz">ciaz</option>
+</select>
+        <p align="center">
+<button type="submit" style="background-color:yellow;margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">Upload and logout</button>
+</p>
+
+
+             </div>
+      </form>
+  </body>
+</html>

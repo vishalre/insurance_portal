@@ -17,10 +17,15 @@ from django.contrib import admin
 from django.urls import path,include
 
 from loginapp import views
-
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login_view, name='login_view'),
     path('logout/', views.logout_view, name = 'logout'),
     path('change/', views.change_password, name = 'changepass'),
+    path('details/',views.detailsview,name='details'),
 ]
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)

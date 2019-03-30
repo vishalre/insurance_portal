@@ -6,17 +6,33 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-
+from loginapp.forms import *
+from loginapp.models import *
 
 
 # Create your views here.
 
 
 @login_required
-def test(request):
-    return render(request, 'loginapp/comingsoon.html')
+def detailsview(request):
+    print('dd')
+    if request.method == 'POST':
+        #vv=request.POST
+        #print(vv,request.FILES.get('car'))
+        ob1=detailsmodel(licnum=request.POST.get('lic'),carImg=request.FILES.get('car'),speed=request.POST.get('speed'),
+        vechilemodel=request.POST.get('vechilemodel'))
+        ob1.save()
+        print(ob1)
+        return redirect('logout')
+    else:
+        return render(request, 'loginapp/details.html')
 
+#
+# def test_1(request):
+#     return HttpResponse("<h1>CHANGE PASSWORD</h1>")
 
+#work in progress
+#not working properly
 @login_required
 def change_password(request):
     # print("hello from password")
@@ -68,7 +84,7 @@ def login_view(request):
                 return redirect('changepass')
             else:
                 login(request, user)
-                return test(request)
+                return redirect('details')
         else:
             return HttpResponse("<h1>Invalid Credentials</h1>")
 
