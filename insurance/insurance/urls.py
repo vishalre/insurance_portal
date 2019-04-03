@@ -22,9 +22,12 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login_view, name='login_view'),
-    path('logout/', views.logout_view, name = 'logout'),
+    path('logout/', views.logout_view, name = 'logout_page'),
     path('change/', views.change_password, name = 'changepass'),
-    path('details/',views.detailsview,name='details'),
+    path('user_profile/',views.user_view,name='user_page'),
+    path('dashboard/',views.dashboard_view,name='dashboard_page'),
+    path('claims/',views.claims_view,name='claims_page'),
+    path('notifications/',views.notifications_view,name='notifications_page'),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,

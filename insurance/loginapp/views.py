@@ -11,28 +11,52 @@ from loginapp.models import *
 
 
 # Create your views here.
-
+@login_required
+def notifications_view(request):
+    return render(request,'loginapp/notifications.html')
 
 @login_required
-def detailsview(request):
+def claims_view(request):
     print('dd')
     if request.method == 'POST':
-        #vv=request.POST
-        #print(vv,request.FILES.get('car'))
-        ob1=detailsmodel(licnum=request.POST.get('lic'),carImg=request.FILES.get('car'),speed=request.POST.get('speed'),
+        vv=request.POST
+        print(vv,request.FILES.get('car'))
+        ob1=detailsmodel(licnum=request.POST.get('lic'),
+        carImg=request.FILES.get('car'),
+        speed=request.POST.get('speed'),
         vechilemodel=request.POST.get('vechilemodel'))
         ob1.save()
         print(ob1)
-        return redirect('logout')
+        return redirect('claims_page')
     else:
-        return render(request, 'loginapp/details.html')
+        return render(request, 'loginapp/claims.html')
+    return render(request,'loginapp/claims.html')
 
-#
-# def test_1(request):
-#     return HttpResponse("<h1>CHANGE PASSWORD</h1>")
+@login_required
+def user_view(request):
+    return render(request,'loginapp/user.html')
 
-#work in progress
-#not working properly
+@login_required
+def dashboard_view(request):
+    return render(request,'loginapp/dashboard.html')
+
+# @login_required
+# def detailsview(request):
+#     print('dd')
+#     if request.method == 'POST':
+#         vv=request.POST
+#         print(vv,request.FILES.get('car'))
+#         ob1=detailsmodel(licnum=request.POST.get('lic'),
+#         carImg=request.FILES.get('car'),
+#         speed=request.POST.get('speed'),
+#         vechilemodel=request.POST.get('vechilemodel'))
+#         ob1.save()
+#         print(ob1)
+#         return redirect('logout')
+#     else:
+#         return render(request, 'loginapp/details.html')
+
+
 @login_required
 def change_password(request):
     # print("hello from password")
@@ -72,7 +96,6 @@ def login_view(request):
         insr_pass = request.POST.get("pass");
         # test = User.objects.get(email = 'vishal@gmail.com')
         # print(test)
-
         user = authenticate(username=insr_user, password=insr_pass)
 
         if user is not None:
@@ -84,7 +107,7 @@ def login_view(request):
                 return redirect('changepass')
             else:
                 login(request, user)
-                return redirect('details')
+                return redirect('dashboard_page')
         else:
             return HttpResponse("<h1>Invalid Credentials</h1>")
 
