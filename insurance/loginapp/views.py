@@ -7,7 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from loginapp.forms import *
-from loginapp.models import *
+from loginapp.models import detailsmodel,UserProfile
+from newsapi import NewsApiClient
+
 
 
 # Create your views here.
@@ -17,7 +19,6 @@ def notifications_view(request):
 
 @login_required
 def claims_view(request):
-    print('dd')
     if request.method == 'POST':
         vv=request.POST
         print(vv,request.FILES.get('car'))
@@ -34,11 +35,27 @@ def claims_view(request):
 
 @login_required
 def user_view(request):
-    return render(request,'loginapp/user.html')
+    data = UserProfile.objects.get(user = request.user)
+    return render(request,'loginapp/user.html',{'data' : data })
 
 @login_required
 def dashboard_view(request):
-    return render(request,'loginapp/dashboard.html')
+    import requests
+    url = ('https://newsapi.org/v2/top-headlines?'
+           'country=in&'
+           'apiKey=e894820c96e44c209a7be606a4ffdcf6')
+    response = requests.get(url).json()
+    article = response['articles']
+
+    results = []
+    for ar in article:
+        results.append(ar['title'])
+
+    # for i in range(len(results)):
+    #     print(i + 1, results[i])
+    results = results[:10]
+
+    return render(request,'loginapp/dashboard.html',{'results' : results})
 
 # @login_required
 # def detailsview(request):
@@ -101,7 +118,7 @@ def login_view(request):
         if user is not None:
             user_last = User.objects.get(username = user)
             last_login = user_last.last_login
-            print(last_login,"from login_view")
+            # print(last_login,"from login_view")
             if last_login is None:
                 login(request, user)
                 return redirect('changepass')

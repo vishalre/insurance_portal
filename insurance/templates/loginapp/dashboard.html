@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
+	<link rel="icon" type="image/png" href="{% static "assets/img/favicon.ico" %}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 	<title>Dashboard</title>
@@ -134,7 +134,7 @@
                     <div class="col-md-6">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">2014 Sales</h4>
+                                <h4 class="title">2019 Sales</h4>
                                 <p class="category">All products including Taxes</p>
                             </div>
                             <div class="content">
@@ -155,13 +155,30 @@
                     </div>
 
 
+												<div class="col-md-6">
+														<div class="card ">
+																<div class="header">
+																		<h4 class="title">Headlines</h4>
+																</div>
+																<div class="content">
+																	{% for x in results %}
+																		<p>{{ x }}</p>
+
+																		{% endfor %}
+																</div>
+
+														</div>
+												</div>
+
+
+
                             </div>
                         </div>
                   </div>
 
 
 
-        <footer class="footer" style="position: fixed; bottom: 0; width: 83%">
+        <footer class="footer">
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
@@ -219,7 +236,7 @@
 
         	$.notify({
             	icon: 'pe-7s-gift',
-            	message: "Welcome <b>User</b>"
+            	message: "Welcome <b>{{ user.first_name }}</b>"
 
             },{
                 type: 'info',
