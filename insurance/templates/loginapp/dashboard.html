@@ -160,11 +160,14 @@
 																<div class="header">
 																		<h4 class="title">Headlines</h4>
 																</div>
-																<div class="content">
-																	{% for x in results %}
-																		<p>{{ x }}</p>
 
-																		{% endfor %}
+																<div class="content">
+																	<ul class="list-group">
+																		{% for x in results %}
+																		 <li class="list-group-item">{{ x }}</li>
+																		 {% endfor %}
+																	</ul>
+
 																</div>
 
 														</div>
