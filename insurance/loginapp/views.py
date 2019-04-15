@@ -17,12 +17,14 @@ from newsapi import NewsApiClient
 def notifications_view(request):
     return render(request,'loginapp/notifications.html')
 
+
 @login_required
 def claims_view(request):
     if request.method == 'POST':
         vv=request.POST
         print(vv,request.FILES.get('car'))
-        ob1=detailsmodel(licnum=request.POST.get('lic'),
+        ob1=detailsmodel(userid=request.user,
+        licnum=request.POST.get('lic'),
         carImg=request.FILES.get('car'),
         speed=request.POST.get('speed'),
         vechilemodel=request.POST.get('vechilemodel'))

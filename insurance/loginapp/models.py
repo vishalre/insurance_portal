@@ -20,12 +20,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-
 class detailsmodel(models.Model):
+    userid = models.ForeignKey(User, on_delete= 'cascade')
     licnum = models.CharField(max_length=50)
     carImg = models.ImageField(upload_to='images/')
     speed=models.IntegerField()
     vechilemodel= models.CharField(max_length=7, choices=TITLE_CHOICES)
 
     def __str__(self):
-        return self.user.username
+        return self.userid.username
