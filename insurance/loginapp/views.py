@@ -14,23 +14,33 @@ from newsapi import NewsApiClient
 
 # Create your views here.
 @login_required
-def notifications_view(request):
-    return render(request,'loginapp/notifications.html')
+def activity_view(request):
+    return render(request,'loginapp/activity.html')
 
+@login_required
+def status_view(request):
+    return render(request,'loginapp/status.html')
 
 @login_required
 def claims_view(request):
     if request.method == 'POST':
-        vv=request.POST
-        print(vv,request.FILES.get('car'))
-        ob1=detailsmodel(userid=request.user,
-        licnum=request.POST.get('lic'),
-        carImg=request.FILES.get('car'),
-        speed=request.POST.get('speed'),
-        vechilemodel=request.POST.get('vechilemodel'))
-        ob1.save()
-        print(ob1)
-        return redirect('claims_page')
+        # vv=request.POST
+        # print(vv,request.FILES.get('car'))
+        validate = UserProfile.objects.get(user = request.user)
+        lic_post = request.POST.get('lic')
+        # print(type(validate.license))
+        if( (validate.license) == int(lic_post) ):  #validate.license returns int so
+            ob1=detailsmodel(userid=request.user,
+            licnum=request.POST.get('lic'),
+            carImg=request.FILES.get('car'),
+            speed=request.POST.get('speed'),
+            vechilemodel=request.POST.get('vechilemodel'),
+            ageofvechile=request.POST.get('age'))
+            ob1.save()
+            print(ob1)
+            return redirect('claims_page')
+        else:
+            return HttpResponse('invalid license number')
     else:
         return render(request, 'loginapp/claims.html')
     return render(request,'loginapp/claims.html')
@@ -120,7 +130,7 @@ def login_view(request):
         if user is not None:
             user_last = User.objects.get(username = user)
             last_login = user_last.last_login
-            # print(last_login,"from login_view")
+            print(last_login,"from login_view")
             if last_login is None:
                 login(request, user)
                 return redirect('changepass')

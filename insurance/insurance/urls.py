@@ -27,7 +27,8 @@ urlpatterns = [
     path('user_profile/',views.user_view,name='user_page'),
     path('dashboard/',views.dashboard_view,name='dashboard_page'),
     path('claims/',views.claims_view,name='claims_page'),
-    path('notifications/',views.notifications_view,name='notifications_page'),
+    path('status/',views.status_view,name='status_page'),
+    path('activity/',views.activity_view,name='activity_page'),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
