@@ -35,15 +35,20 @@ fakegen = Faker()
 #         up.save()
 #         print(i)
 
+def fake_lic():
+    a = str(random.randint(11111111,99999999))
+    a = 'TS' + a
+    return a
+
 def popu_user():
     t = User.objects.all()
     for i in range(len(t)):
-        fake_job = fakegen.job()
-        fake_plate = fakegen.license_plate()
-
+        # fake_job = fakegen.job()
+        # fake_plate = fakegen.license_plate()
+        data = fake_lic()
         # fake_plate = fakegen.address()
         up = UserProfile.objects.get(user = t[i])
-        up.licenseplate = fake_plate
+        up.license = data
         # up.profession = fake_job
         up.save()
         print(i)

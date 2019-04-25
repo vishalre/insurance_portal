@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from loginapp.forms import *
-from loginapp.models import detailsmodel,UserProfile,Otpgenerator
+from loginapp.models import detailsmodel,UserProfile,Otpgenerator,Claimdetails
 from django.core.mail import EmailMessage
 from newsapi import NewsApiClient
 import smtplib
@@ -16,9 +16,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
+def claimidgenerator():
+    claim_id = random.randint(111111111111,999999999999)
+    return claim_id
 
-
-# Create your views here.
 def changepassword(request):
     if request.method == 'POST':
         pwd = request.POST.get('password')
@@ -74,9 +75,13 @@ def activity_view(request):
 
 @login_required
 def status_view(request):
-    claim_amount = request.session['rate']
-    print('status',claim_amount)
-    return render(request,'loginapp/status.html',{'rate' : claim_amount})
+    if request.method == 'POST':
+        claim_current_id = request.POST.get('claimid')
+        claimobject = Claimdetails.objects.get(user_name = request.user, claimID = claim_current_id)
+        print(claimobject)
+        return render(request,'loginapp/status.html',{'data' : claimobject})
+    else:
+        return render(request,'loginapp/status.html')
 
 @login_required
 def claims_view(request):
@@ -86,10 +91,10 @@ def claims_view(request):
         validate = UserProfile.objects.get(user = request.user)
         lic_post = request.POST.get('lic')
         # print(type(validate.license))
-        if( (validate.license) == int(lic_post) ):  #validate.license returns int so
+        if( (validate.license) == (lic_post) ):
             ob1=detailsmodel(userid=request.user,
             licnum=request.POST.get('lic'),
-            carImg=request.FILES.get('car'),
+            carImg=request.FILES.getlist('car'),
             speed=request.POST.get('speed'),
             vechilemodel=request.POST.get('vechilemodel'),
             ageofvechile=request.POST.get('age'),
@@ -99,6 +104,7 @@ def claims_view(request):
             damagedparts=request.POST.getlist('damagedparts')
             d={'bumpers':3000,'fender':5000,'hoodndtrunk':4000,'dooors':6000}
             mode={'Swift':1,'Ertiga':1.5,'Baleno':1.75,'Breeza':2,'ciaz':1.4}
+
             amount=0
             j=0
             for m in mode:
@@ -111,8 +117,15 @@ def claims_view(request):
                                 amount=mode[m]*d[k]+amount
                                 j=j+1
             print(amount)
-            request.session['rate'] = amount
-            return redirect('claims_page')
+
+            claim_id = claimidgenerator()
+            ob2 = Claimdetails(user_name = request.user,
+            claimID = claim_id,
+            claimvalue = amount)
+            ob2.save()
+
+            # request.session['rate'] = amount
+            return render(request,'loginapp/claims.html',{'claim_number':claim_id})
 
             # print(request.POST.getlist('age'))
 

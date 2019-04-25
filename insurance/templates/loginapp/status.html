@@ -135,14 +135,35 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="header">
-												<h4>Track your status  {{ rate }}$</h4>
+                        <h4 class="title">Please fill the following details</h4>
 
                     </div>
 										<br>
+								<form method = "post" enctype="multipart/form-data" action="{% url 'status_page' %}">
+										<div class="content">
+											{% csrf_token %}
+											<div class="row">
+													<div class="col-md-5">
+															<div class="form-group">
+																	<label style="color:black;font-weight:550;">Claim ID : </label>
+																	<input type="text" class="form-control"  placeholder="Twelve digit number" name="claimid" required >
+															</div>
+													</div>
+												</div>
+												<div class="row">
+														<div class="col-md-5">
+																<div class="form-group">
+																		<label style="color:black;font-weight:550;">Claim amount : {{ data.claimvalue }}</label>
+																</div>
+														</div>
+													</div>
+												<button type="submit" class="btn btn-primary"  >Submit</button>
 
-								</div>
-							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+
 				<footer class="footer" >
             <div class="container-fluid">
                 <nav class="pull-left">

@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class Claimdetails(models.Model):
+    user_name = models.ForeignKey(User, on_delete = 'cascade')
+    claimID = models.CharField(max_length = 15)
+    claimvalue = models.CharField(max_length = 15)
+
+    def __str__(self):
+        return self.user_name.username
+
 class Otpgenerator(models.Model):
     mailid = models.CharField(max_length=40,primary_key=True)
     otp = models.IntegerField()
@@ -10,7 +18,7 @@ class Otpgenerator(models.Model):
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete = 'cascade')
-    license = models.IntegerField(default = 1231)
+    license = models.CharField(max_length = 10)
     licenseplate = models.CharField(max_length = 50,default = 'licenseplate')
     profession = models.CharField(max_length = 100, default = 'job')
     address = models.CharField(max_length = 100, blank = True, default = 'place')

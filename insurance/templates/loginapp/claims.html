@@ -140,21 +140,47 @@
                     </div>
 										<br>
 								<form method = "post" enctype="multipart/form-data" action="{% url 'claims_page' %}">
-											<div class="container">
+										<div class="content">
 											{% csrf_token %}
+											<div class="row">
+													<div class="col-md-5">
+															<div class="form-group">
+																	<label style="color:black;font-weight:550;">License Number</label>
+																	<input type="text" class="form-control"  placeholder="Ten digit number" name="lic" required >
+															</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-5">
+															<div class="form-group">
+																	<label for="exampleInputEmail1" style="color:black;font-weight:550;">Images</label>
+																		<input type="file" class="form-control" name="car" multiple >
+															</div>
+													</div>
+											</div>
+											<div class="row">
+													<div class="col-md-5">
+															<div class="form-group">
+																	<label style="color:black;font-weight:550;">Speed</label>
+																	<input type="text" class="form-control"  placeholder="00 Km/ph" name="speed" required >
+															</div>
+													</div>
+												</div>
+												<div class="row">
+														<div class="col-md-5">
+																<div class="form-group">
+																		<label>Model of Vechile</label>
+																		<select name="vechilemodel" required>
+																		<option value="Swift">Swift</option>
+																		<option value="Ertiga">Ertiga</option>
+																		<option value="Baleno">Baleno</option>
+																		<option value="Breeza">Breeza</option>
+																		<option value="ciaz">ciaz</option>
+																		</select>
+																	</div>
+														</div>
+													</div>
 
-										 License Number : <input type="text" placeholder="Ten digit number" name="lic" required><br><br>
-										 Images of car : <input type="file" name="car" ><br><br>
-										 Speed of car : <input type="text" placeholder="00" name="speed" required><br><br>
-										 Model of vechile :
-										 <select name="vechilemodel" required>
-									<option value="Swift">Swift</option>
-									<option value="Ertiga">Ertiga</option>
-									<option value="Baleno">Baleno</option>
-									<option value="Breeza">Breeza</option>
-									 <option value="ciaz">ciaz</option>
-								 		</select>
-										<br><br>
 	 										AGE:
 	 										<SELECT multiple = multiple name="age">
 
@@ -177,6 +203,9 @@
 
 
 										</SELECT>
+										<!-- <div id="claim_visible" style="display:none">
+											<h1>Claim ID : </h1>
+										</div> -->
 											<p align="center">
 												<button type="submit" class="btn btn-primary" onclick="showButton()" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">Submit</button>
 
@@ -223,6 +252,18 @@
  if(url == 'False'){
 	alert('Incorrect License Number, Please check again....')
  }
+
+</script>
+<script>
+ var claim_num = '{{claim_number}}';
+ if(claim_num > '1'){
+ 	alert('Please note down ClaimID to track your status : ' + claim_num);
+
+	}
+	// else{
+	// 	alert('Claim not accepted')
+	// }
+
 
 </script>
 
