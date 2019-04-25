@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from loginapp.forms import *
-from loginapp.models import detailsmodel,UserProfile,Otpgenerator,Claimdetails
+from loginapp.models import detailsmodel,UserProfile,Otpgenerator,Claimdetails,logindetails
 from django.core.mail import EmailMessage
 from newsapi import NewsApiClient
 import smtplib
@@ -71,7 +71,9 @@ def otpcomparator(request):
 
 @login_required
 def activity_view(request):
-    return render(request,'loginapp/activity.html')
+    loginobject = logindetails.objects.filter(user_name = request.user)
+    print(loginobject)
+    return render(request,'loginapp/activity.html',{'data' : loginobject})
 
 @login_required
 def status_view(request):
@@ -220,6 +222,11 @@ def login_view(request):
         if user is not None:
             user_last = User.objects.get(username = user)
             last_login = user_last.last_login
+
+            ob3 = logindetails(user_name = user,
+            timestamp = last_login)
+            ob3.save()
+
             print(last_login,"from login_view")
             if last_login is None:
                 login(request, user)

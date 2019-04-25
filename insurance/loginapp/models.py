@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class logindetails(models.Model):
+    user_name = models.ForeignKey(User, on_delete = 'cascade')
+    timestamp = models.DateTimeField()
+
+    def __str__(self):
+        return self.user_name.username
+
+
 class Claimdetails(models.Model):
     user_name = models.ForeignKey(User, on_delete = 'cascade')
     claimID = models.CharField(max_length = 15)

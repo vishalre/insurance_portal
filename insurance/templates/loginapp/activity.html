@@ -136,14 +136,16 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Notifications</h4>
+                        <h4 class="title">User Activity</h4><hr>
 
                     </div>
                     <div class="content">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="">
-                                    <strong>You were logged in at {{ user.last_login }}</strong>
+																	{% for x in data %}
+                                    <p>You were logged in at {{ x.timestamp }}<p>
+																	{% endfor %}
                                 </div>
                                 <!-- <div class="alert alert-info">
                                     <button type="button" aria-hidden="true" class="close">×</button>
