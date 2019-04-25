@@ -92,7 +92,8 @@ def claims_view(request):
             carImg=request.FILES.get('car'),
             speed=request.POST.get('speed'),
             vechilemodel=request.POST.get('vechilemodel'),
-            ageofvechile=request.POST.getlist('age'))
+            ageofvechile=request.POST.get('age'),
+            damagedpart=request.POST.getlist('damagedparts'))
             ob1.save()
             vechilemodel=request.POST.get('vechilemodel')
             damagedparts=request.POST.getlist('damagedparts')
@@ -116,7 +117,7 @@ def claims_view(request):
             # print(request.POST.getlist('age'))
 
         else:
-            return HttpResponse('invalid license number')
+            return render(request, 'loginapp/claims.html',{'claim':False})
     else:
         return render(request, 'loginapp/claims.html')
     return render(request,'loginapp/claims.html')

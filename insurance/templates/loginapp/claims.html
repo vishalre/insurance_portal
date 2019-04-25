@@ -217,10 +217,13 @@
 
 
 </body>
-<script type="text/javascript">
-			function showButton() {
-			document.getElementById('evaluateButton').style.display = "block";
-			}
+<script>
+ var url = '{{claim}}';
+ console.log(url);
+ if(url == 'False'){
+	alert('Incorrect License Number, Please check again....')
+ }
+
 </script>
 
 

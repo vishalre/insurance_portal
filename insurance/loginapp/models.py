@@ -29,6 +29,7 @@ class detailsmodel(models.Model):
     speed=models.IntegerField()
     vechilemodel= models.CharField(max_length=10)
     ageofvechile=models.CharField(max_length=10,default='place')
+    damagedpart = models.CharField(max_length = 10,default='test')
     # testmodel = models.ManyToManyField(Parts)
 
     def __str__(self):
