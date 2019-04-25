@@ -11,7 +11,7 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
+		<link rel="stylesheet" href="{% static "/css/style_rotate.css" %}">
     <!-- Bootstrap core CSS     -->
     <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" />
 
@@ -152,12 +152,11 @@
 									<option value="Ertiga">Ertiga</option>
 									<option value="Baleno">Baleno</option>
 									<option value="Breeza">Breeza</option>
-
 									 <option value="ciaz">ciaz</option>
 								 		</select>
 										<br><br>
 	 										AGE:
-	 										<SELECT name="age">
+	 										<SELECT multiple = multiple name="age">
 
 	 										<OPTION Value="Under 1">Under 1</OPTION>
 	 										<OPTION Value="1 to 2">1 to 2</OPTION>
@@ -166,6 +165,18 @@
 	 										<OPTION Value="Over 4">Over 4</OPTION>
 
 	 										</SELECT>
+											<br>
+											<br>
+											DAMAGED PARTS:
+											<SELECT MULTIPLE="multiple" name="damagedparts">
+
+											<OPTION Value="bumpers">Front and Rear Bumpers</OPTION>
+											<OPTION Value="fender">Fender</OPTION>
+											<OPTION Value="hoodndtrunk">Hood and Trunk Lid</OPTION>
+											<OPTION Value="dooors">Front and Rear doors</OPTION>
+
+
+										</SELECT>
 											<p align="center">
 												<button type="submit" class="btn btn-primary" onclick="showButton()" style="margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%">Submit</button>
 

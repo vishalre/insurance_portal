@@ -11,7 +11,7 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
+		<link rel="stylesheet" href="{% static "/css/style_rotate.css" %}">
     <!-- Bootstrap core CSS     -->
     <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" />
 
@@ -23,6 +23,7 @@
 
 
     <link href="{% static "assets/css/demo.css" %}" rel="stylesheet" />
+
 
 
     <!--     Fonts and icons     -->
@@ -121,8 +122,10 @@
 														</ul>
 											</li>
                         <li>
-                            <a href="{% url 'logout_page' %}">
-                                <p>Log out</p>
+
+														<a href="{% url 'logout_page' %}">
+                                <p>Log out
+																	</p>
                             </a>
                         </li>
 						<li class="separator hidden-lg hidden-md"></li>
@@ -149,6 +152,7 @@
                                                 <input type="text" class="form-control" disabled placeholder="Company" value="Creative Code Inc.">
                                             </div>
                                         </div> -->
+
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Username</label>
@@ -312,7 +316,7 @@
     <!--  Notifications Plugin    -->
     <script src="{% static "assets/js/bootstrap-notify.js" %}"></script>
 
-
+<script  src="{% static 'js/index.js' %}"></script>
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="{% static "assets/js/light-bootstrap-dashboard.js" %}"></script>

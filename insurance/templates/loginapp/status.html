@@ -11,7 +11,7 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
+		<link rel="stylesheet" href="{% static "/css/style_rotate.css" %}">
     <!-- Bootstrap core CSS     -->
     <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet" />
 
@@ -135,7 +135,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="header">
-												<h4>Track your status</h4>
+												<h4>Track your status  {{ rate }}$</h4>
 
                     </div>
 										<br>
@@ -175,11 +175,6 @@
 
 
 </body>
-<script type="text/javascript">
-			function showButton() {
-			document.getElementById('evaluateButton').style.display = "block";
-			}
-</script>
 
 
         <!--   Core JS Files   -->

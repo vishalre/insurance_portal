@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class Otpgenerator(models.Model):
+    mailid = models.CharField(max_length=40,primary_key=True)
+    otp = models.IntegerField()
+
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete = 'cascade')
@@ -25,6 +29,11 @@ class detailsmodel(models.Model):
     speed=models.IntegerField()
     vechilemodel= models.CharField(max_length=10)
     ageofvechile=models.CharField(max_length=10,default='place')
+    # testmodel = models.ManyToManyField(Parts)
 
     def __str__(self):
         return self.userid.username
+
+#
+# class Parts(models.Model):
+#     desc = models.CharField(max_length=300)

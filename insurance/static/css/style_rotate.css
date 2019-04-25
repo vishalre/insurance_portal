@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+body {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+  margin-top: 2rem;
+}
+
+.container {
+  margin-top: 2em;
+  text-align: center;
+  -webkit-perspective: 500px;
+  -moz-perspective: 500px;
+  -o-perspective: 500px;
+  perspective: 500px;
+}
+
+.logo {
+  font-family: "Roboto", sans-serif;
+  -webkit-transition: all 3s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  -moz-transition: all 3s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  -o-transition: all 3s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  transition: all 3s cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  -webkit-transition-delay: 1s;
+  -moz-transition-delay: 1s;
+  -o-transition-delay: 1s;
+  transition-delay: 1s;
+  -webkit-animation: motion 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  animation: motion 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+@-webkit-keyframes motion {
+  0% {
+    -webkit-transform: rotateY(0);
+    transform: rotateY(0);
+  }
+  100% {
+    -webkit-transform: rotateY(-720deg);
+    transform: rotateY(-720deg);
+  }
+}
+@keyframes motion {
+  0% {
+    -webkit-transform: rotateY(0);
+    transform: rotateY(0);
+  }
+  100% {
+    -webkit-transform: rotateY(-720deg);
+    transform: rotateY(-720deg);
+  }
+}

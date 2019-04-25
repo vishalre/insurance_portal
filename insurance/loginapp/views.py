@@ -7,19 +7,76 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from loginapp.forms import *
-from loginapp.models import detailsmodel,UserProfile
+from loginapp.models import detailsmodel,UserProfile,Otpgenerator
+from django.core.mail import EmailMessage
 from newsapi import NewsApiClient
+import smtplib
+import random
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
 
 
 # Create your views here.
+def changepassword(request):
+    if request.method == 'POST':
+        pwd = request.POST.get('password')
+        email = request.POST.get('emailid')
+        user1 = User.objects.get(email=email)
+        user1.set_password(pwd)
+        user1.save()
+        obj = Otpgenerator.objects.get(mailid=user1.email)
+        obj.delete()
+        return redirect('login_view')
+    else:
+        return HttpResponse("failed")
+    pass
+
+def forgotpassword(request):
+    return render(request,"loginapp/forgot.html")
+
+def otpgenerator(request):
+    if request.method == 'GET':
+        emailid = request.GET.get('email')
+        otp = random.randint(999, 9999)
+        obj = Otpgenerator(mailid = emailid, otp = otp)
+        print(obj)
+        obj.save()
+        mail_subject = 'Change password for your account.'
+        message = 'Your OTP is:' + str(otp)
+        email = EmailMessage(
+            mail_subject, message, to=[emailid]
+        )
+        print(email)
+        email.send()
+        return redirect("forgotpassword")
+
+def otpcomparator(request):
+    if request.method == 'GET':
+        gototp = request.GET.get('otp')
+        email = request.GET.get('email')
+        print(gototp)
+        user1 = User.objects.get(email=email)
+        if user1 is not None:
+            obj = Otpgenerator.objects.get(mailid=user1.email)
+            if obj.otp == gototp:
+                return HttpResponse('Success')
+            else:
+                return redirect('registration')
+        else:
+            return redirect('registration')
+    pass
+
 @login_required
 def activity_view(request):
     return render(request,'loginapp/activity.html')
 
 @login_required
 def status_view(request):
-    return render(request,'loginapp/status.html')
+    claim_amount = request.session['rate']
+    print('status',claim_amount)
+    return render(request,'loginapp/status.html',{'rate' : claim_amount})
 
 @login_required
 def claims_view(request):
@@ -35,10 +92,29 @@ def claims_view(request):
             carImg=request.FILES.get('car'),
             speed=request.POST.get('speed'),
             vechilemodel=request.POST.get('vechilemodel'),
-            ageofvechile=request.POST.get('age'))
+            ageofvechile=request.POST.getlist('age'))
             ob1.save()
-            print(ob1)
+            vechilemodel=request.POST.get('vechilemodel')
+            damagedparts=request.POST.getlist('damagedparts')
+            d={'bumpers':3000,'fender':5000,'hoodndtrunk':4000,'dooors':6000}
+            mode={'Swift':1,'Ertiga':1.5,'Baleno':1.75,'Breeza':2,'ciaz':1.4}
+            amount=0
+            j=0
+            for m in mode:
+                if(vechilemodel==m):
+                    l=len(damagedparts)
+                    print(l)
+                    for k in d:
+                        if(j<l):
+                            if(k==damagedparts[j]):
+                                amount=mode[m]*d[k]+amount
+                                j=j+1
+            print(amount)
+            request.session['rate'] = amount
             return redirect('claims_page')
+
+            # print(request.POST.getlist('age'))
+
         else:
             return HttpResponse('invalid license number')
     else:
@@ -138,7 +214,7 @@ def login_view(request):
                 login(request, user)
                 return redirect('dashboard_page')
         else:
-            return HttpResponse("<h1>Invalid Credentials</h1>")
+            return render(request,"loginapp/index.html",{"loggedin" :False})
 
 
     return render(request, 'loginapp/index.html')
