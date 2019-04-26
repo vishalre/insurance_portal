@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load crispy_forms_tags %}
+{% load staticfiles %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -22,11 +22,12 @@
         <a href="#" id="otptypebtn" class="btn btn-dark">Submit</a><br><br>
     </div>
     <div class="container" id="divchangepwd" style="display:none">
-    <form action="{% url 'changepassword' %}" method="POST">{% csrf_token %}
-            <input type="email" name="emailid" id="emailid" style="" />
-            <input type="password" name="password" placeholder="Password" /><br><br>
-            <input type="password" name="password" placeholder="Confirm Password" /><br><br>
-                <button type="submit">Submit</button>
+    <form action="{% url 'changepassword' %}" method="POST">
+      {% csrf_token %}
+            <input type="email" name="emailid" id="emailid" required style="" />
+            <input type="password" name="password" placeholder="Password" required /><br><br>
+            <input type="password" name="password" placeholder="Confirm Password"  required/><br><br>
+                <button type="submit" class="btn btn-dark">Submit</button>
     </form>
 
 
@@ -36,8 +37,8 @@
   	$('#otpbtn').click(function() {
       var email = $('#email').val();
       document.getElementById("emailid").value = email;
-      console.log(email);
-      var url = 'http://127.0.0.1:8000/otpgenerator/';
+      console.log(email + 'hello');
+      var url = 'http://127.0.0.1:8000/otpgenerator';
       var data = {'email': email};
       console.log(data);
       var success = function () {

@@ -12,6 +12,7 @@ from django.core.mail import EmailMessage
 from newsapi import NewsApiClient
 import smtplib
 import random
+from django.conf import settings
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
@@ -40,6 +41,7 @@ def forgotpassword(request):
 def otpgenerator(request):
     if request.method == 'GET':
         emailid = request.GET.get('email')
+        # print(emailid)
         otp = random.randint(999, 9999)
         obj = Otpgenerator(mailid = emailid, otp = otp)
         print(obj)
@@ -53,20 +55,24 @@ def otpgenerator(request):
         email.send()
         return redirect("forgotpassword")
 
+
+
 def otpcomparator(request):
     if request.method == 'GET':
         gototp = request.GET.get('otp')
         email = request.GET.get('email')
         print(gototp)
         user1 = User.objects.get(email=email)
+        print(user1)
         if user1 is not None:
             obj = Otpgenerator.objects.get(mailid=user1.email)
-            if obj.otp == gototp:
+            print(type(gototp))
+            if obj.otp == int(gototp):
                 return HttpResponse('Success')
             else:
-                return redirect('registration')
+                return redirect('forgotpassword')
         else:
-            return redirect('registration')
+            return redirect('forgotpassword')
     pass
 
 @login_required
